@@ -97,9 +97,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v3
+    - uses: actions/setup-python@v3
 
     - name: Install dependencies
       run: |
@@ -107,5 +105,4 @@ jobs:
         python -m pip install --upgrade tox tox-gh-actions
 
     - name: Tox tests
-      run: |
-        tox -e quality -v
+      run: tox -e quality -v
