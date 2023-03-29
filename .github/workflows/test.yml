@@ -91,9 +91,13 @@ jobs:
       with:
         name: Python ${{ matrix.python-version }}
 
-  quality:
-    name: Check code quality
+  tox_checks:
+    name: Run tox environment ${{ matrix.tox-env }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tox-env: ['quality', 'dist-validation']
 
     steps:
     - uses: actions/checkout@v3
@@ -105,4 +109,4 @@ jobs:
         python -m pip install --upgrade tox tox-gh-actions
 
     - name: Tox tests
-      run: tox -e quality -v
+      run: tox -e ${{ matrix.tox-env }} -v
