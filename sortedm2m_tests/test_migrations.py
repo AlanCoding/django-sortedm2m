@@ -44,6 +44,7 @@ class OperationTests(OperationTestBase):
         Pony = project_state.apps.get_model("test_alflmm", "Pony")
         self.assertTrue(Pony._meta.get_field("stables").blank)
 
+
 class OperationTests(OperationTestBase):
 
     available_apps = ["example.testapp"]
