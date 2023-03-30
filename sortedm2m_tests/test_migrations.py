@@ -248,3 +248,36 @@ class OperationTests(OperationTestBase):
         )
         Pony = original_state.apps.get_model("test_alflmm", "Pony")
         self.assertIsInstance(Pony._meta.get_field("stables"), SortedManyToManyField)
+
+    def test_alter_field_sortedm2m_to_sortedm2m(self):
+        """
+        Test that we can rename the sortedm2m field
+        """
+        project_state = self.set_up_test_model("test_alflmm", second_model=True)
+
+        project_state = self.apply_operations(
+            "test_alflmm",
+            project_state,
+            operations=[
+                migrations.AddField(
+                    "Pony",
+                    "stables",
+                    SortedManyToManyField("Stable", related_name="ponies"),
+                )
+            ],
+        )
+        Pony = project_state.apps.get_model("test_alflmm", "Pony")
+        self.assertIsInstance(Pony._meta.get_field("stables"), SortedManyToManyField)
+
+        project_state = self.apply_operations(
+            "test_alflmm",
+            project_state,
+            operations=[
+                migrations.RenameField(
+                    model_name='pony', old_name='stables', new_name='new_stables'
+                )
+            ],
+        )
+        Pony = project_state.apps.get_model("test_alflmm", "Pony")
+        assert not hasattr(Pony, 'stables')
+        self.assertIsInstance(Pony._meta.get_field("new_stables"), SortedManyToManyField)
