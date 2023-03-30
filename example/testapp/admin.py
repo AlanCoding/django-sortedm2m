@@ -9,7 +9,7 @@ class ParkingAreaAdmin(admin.ModelAdmin):
             'classes': ('wide',),
             'fields': (
                 'name',
-                'cars',
+                'new_cars',
             ),
         }),
     )

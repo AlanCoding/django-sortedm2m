@@ -18,7 +18,7 @@ class BaseCarThrough:
 
 class ParkingArea(models.Model):
     name = models.CharField(max_length=50)
-    cars = SortedManyToManyField(Car, base_class=BaseCarThrough)
+    new_cars = SortedManyToManyField(Car, base_class=BaseCarThrough)
 
     def __str__(self):
         return self.name
